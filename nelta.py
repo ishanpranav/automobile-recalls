@@ -5,7 +5,6 @@
 # CONSTRAINT: may not use `pandas`, `numpy`; must use `csv`
 
 class LabeledList:
-    
     def __init__(self, data = None, index = None):
         if index is None:
             index = list(range(len(data)))
@@ -14,15 +13,15 @@ class LabeledList:
         self.index = index
 
     def __str__(self):
-        s = ''
-        max_len = max([len(str(label)) for label in self.index])
-        vals_max_len = max([len(str(v)) for v in self.values])
-        format_spec = f'>{max_len}'
+        result = ""
+        maxLength = max(len(str(label)) for label in self.index)
+        valuesMaxLength = max(len(str(value)) for value in self.values)
+        formatting = f'>{maxLength}'
         
-        for index, data in zip(self.index, self.values):
-            s += f'{index:{format_spec}} {str(data):>{vals_max_len}}\n'
+        for label, value in zip(self.index, self.values):
+            result += f"{label:{formatting}} {str(value):>{valuesMaxLength}}\n"
         
-        return s
+        return result
 
     def __repr__(self):
         return self.__str__()
@@ -62,7 +61,8 @@ class LabeledList:
         return LabeledList(data, index)
     
     def __find(self, k):
-        index, data = [], []
+        index = []
+        data = []
         matches = [
             (label, self.values[i]) for i, label in enumerate(self.index) 
                 if k == label
@@ -96,12 +96,58 @@ class LabeledList:
         return LabeledList([ f(i) for i in self.values ], self.index)
     
 class Table:
-    pass
+    def __init__(self, data = None, index = None, columns = None):
+        if index is None:
+            index = list(range(len(data)))
+            
+        if columns is None:
+            if len(data) == 0:
+                columns = []
+            else:    
+                columns = list(range(len(data[0])))
+       
+        self.values = data
+        self.index = index
+        self.columns = columns
 
-
+    def __str__(self):
+        result = ""
+        maxLength = max(len(str(label)) for label in self.index)
+        formatting = f'>{maxLength}'
+        values = self.values + [ self.columns ]
+        columnMaxLengths = [
+            max(len(str(value[i])) for value in values)
+            for i in range(len(self.columns))
+        ]
+        
+        result += str(self.columns) + "\n"
+        
+        for label, value in zip(self.index, self.values):
+            result += f"{label:{formatting}}"
+            
+            for i, cell in enumerate(value):
+                result += f" {str(cell):>{columnMaxLengths[i]}}"
+        
+            result += "\n"
+            # result += f"{index:{formatting}} {str(data):>{valuesMaxLength}}\n"
+        
+        return result
+        
+    def __repr__(self):
+        return self.__str__()
+    
 if __name__ == '__main__':
-    def squared(n):
-        return n ** 2
+    # def squared(n):
+    #     return n ** 2
     
-    print(LabeledList([5, 6, 7]).map(squared))
+    # print(LabeledList([5, 6, 7]).map(squared))
     
+    # t = Table([['foo', 'bar', 'baz'],['qux', 'quxx', 'corge']])
+
+    # print(t)
+    
+    d = [ [1000, 10, 100, 1, 1.0], [200, 2, 2.0, 2000, 20], [3, 300, 3000, 3.0, 30], [40, 4000, 4.0, 400, 4], [7, 8, 6, 3, 41] ]
+    
+    t = Table(d, ['foo', 'bar', 'bazzy', 'qux', 'quxx'], ['a', 'b', 'c', 'd', 'e'])
+    
+    print(t)
