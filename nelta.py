@@ -120,17 +120,21 @@ class Table:
             for i in range(len(self.columns))
         ]
         
-        result += str(self.columns) + "\n"
+        result += " " * maxLength
+        
+        for column, columnMaxLength in zip(self.columns, columnMaxLengths):
+            result += f" {str(column):>{columnMaxLength}}"
+            
+        result += "\n"
         
         for label, value in zip(self.index, self.values):
             result += f"{label:{formatting}}"
             
-            for i, cell in enumerate(value):
-                result += f" {str(cell):>{columnMaxLengths[i]}}"
+            for cell, columnMaxLength in zip(value, columnMaxLengths):
+                result += f" {str(cell):>{columnMaxLength}}"
         
             result += "\n"
-            # result += f"{index:{formatting}} {str(data):>{valuesMaxLength}}\n"
-        
+            
         return result
         
     def __repr__(self):
