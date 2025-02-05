@@ -179,7 +179,10 @@ class Table:
         #         data.append(value)
         
         # return data[0] if len(data) == 1 else LabeledList(data, index)
-    
+
+def read_csv(f):
+    pass
+
 if __name__ == '__main__':
     # def squared(n):
     #     return n ** 2
