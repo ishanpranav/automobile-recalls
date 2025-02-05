@@ -26,53 +26,54 @@ class LabeledList:
     def __repr__(self):
         return self.__str__()
 
-    def __getitem__(self, key_list):
-        if isinstance(key_list, LabeledList):
-            key_list = key_list.values
-
-        if not isinstance(key_list, list):
-            key_list = [key_list]
-        
-        if len([v for v in key_list if type(v) is bool]) == len(key_list):
-            return self.__filter(key_list) 
-        else:
+    def __getitem__(self, keys):
+        def filter(includes):
             index = []
             data = []
             
-            for key in key_list:
-                for label, val in self.__find(key):
-                    index.append(label)
-                    data.append(val)
+            if len(includes) != len(self.index):
+                raise IndexError(
+                    "Length of indexes does not match length of boolean list")
             
-            return data[0] if len(data) == 1 else LabeledList(data, index)
+            for i, include in enumerate(includes):
+                if include:
+                    index.append(self.index[i])
+                    data.append(self.values[i])
+                    
+            return LabeledList(data, index)
+        
+        def find(k):
+            index = []
+            data = []
+            matches = [
+                (label, self.values[i]) for i, label in enumerate(self.index) 
+                    if k == label
+            ]
+            
+            if len(matches) == 0:
+                raise KeyError(f'Index label not found {k}')
+            
+            return matches
+        
+        if isinstance(keys, LabeledList):
+            keys = keys.values
 
-    def __filter(self, filter_list):
+        if not isinstance(keys, list):
+            keys = [keys]
+        
+        if len([v for v in keys if type(v) is bool]) == len(keys):
+            return filter(keys) 
+        
         index = []
         data = []
         
-        if len(filter_list) != len(self.index):
-            raise IndexError('Length of indexes does not match length of boolean list')
+        for key in keys:
+            for label, value in find(key):
+                index.append(label)
+                data.append(value)
         
-        for i, include in enumerate(filter_list):
-            if include:
-                index.append(self.index[i])
-                data.append(self.values[i])
-                
-        return LabeledList(data, index)
-    
-    def __find(self, k):
-        index = []
-        data = []
-        matches = [
-            (label, self.values[i]) for i, label in enumerate(self.index) 
-                if k == label
-        ]
-        
-        if len(matches) == 0:
-            raise KeyError(f'Index label not found {k}')
-        
-        return matches
-    
+        return data[0] if len(data) == 1 else LabeledList(data, index)
+
     def __iter__(self):
         return iter(self.values)
     
@@ -140,6 +141,45 @@ class Table:
     def __repr__(self):
         return self.__str__()
     
+    def __getitem__(self, keys):
+        def filter(includes):
+            index = []
+            data = []
+            count = len(includes)
+            
+            if count != len(self.index):
+                raise IndexError(
+                    "Length of indexes does not match length of boolean list")
+            
+            for i, include in enumerate(includes):
+                if include:
+                    index.append(self.index[i])
+                    data.append(self.values[i])
+            
+            if count == 1:
+                return LabeledList(data, index)
+        
+            return Table(data, index, self.columns)
+        
+        if isinstance(keys, LabeledList):
+            keys = keys.values
+            
+        # if not isinstance(keys, list):
+        #     keys = [keys]
+        
+        if len([v for v in keys if type(v) is bool]) == len(keys):
+            return filter(keys)
+
+        # index = []
+        # data = []
+        
+        # for key in keys:
+        #     for label, value in find(key):
+        #         index.append(label)
+        #         data.append(value)
+        
+        # return data[0] if len(data) == 1 else LabeledList(data, index)
+    
 if __name__ == '__main__':
     # def squared(n):
     #     return n ** 2
@@ -149,9 +189,17 @@ if __name__ == '__main__':
     # t = Table([['foo', 'bar', 'baz'],['qux', 'quxx', 'corge']])
 
     # print(t)
+    # ll = LabeledList([1, 2, 3, 4, 5], ['A', 'BB', 'BB', 'CCC', 'D'])
+
+    # 1 (values are taken from LabeledList as a list...
+    # more than one label yields all label and value pairs)
+    # print(ll[LabeledList(['A', 'BB'])])
     
-    d = [ [1000, 10, 100, 1, 1.0], [200, 2, 2.0, 2000, 20], [3, 300, 3000, 3.0, 30], [40, 4000, 4.0, 400, 4], [7, 8, 6, 3, 41] ]
+    # d = [ [1000, 10, 100, 1, 1.0], [200, 2, 2.0, 2000, 20], [3, 300, 3000, 3.0, 30], [40, 4000, 4.0, 400, 4], [7, 8, 6, 3, 41] ]
     
-    t = Table(d, ['foo', 'bar', 'bazzy', 'qux', 'quxx'], ['a', 'b', 'c', 'd', 'e'])
+    # t = Table(d, ['foo', 'bar', 'bazzy', 'qux', 'quxx'], ['a', 'b', 'c', 'd', 'e'])
     
-    print(t)
+    t = Table([[1, 2, 3], [4, 5, 6], [7, 8 , 9]], columns=['x', 'y', 'z'])
+    x = t[[True, False, True]]
+
+    print(x)
