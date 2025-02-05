@@ -305,8 +305,8 @@ bazzy     3  300
         t = Table([ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], [ 7, 8 ] ], columns=columns)
         y = t.tail(2)
         x = """  x y
-0  5 6
-1  7 8
+2  5 6
+3  7 8
 """
         self.assertEqual(type(y), Table)
         self.assertEqual(str(y), x)

@@ -202,7 +202,15 @@ class Table:
         return Table(data, index, self.columns)
     
     def tail(self, n):
-        pass
+        index = []
+        data = []
+        offset = len(self.index) - n
         
+        for i in range(n):
+            index.append(self.index[i + offset])
+            data.append(self.values[i + offset])
+        
+        return Table(data, index, self.columns)
+            
 def read_csv(f):
     pass
