@@ -211,6 +211,9 @@ class Table:
             data.append(self.values[i + offset])
         
         return Table(data, index, self.columns)
-            
+    
+    def shape(self):
+        return (len(self.index), len(self.columns))
+    
 def read_csv(f):
     pass

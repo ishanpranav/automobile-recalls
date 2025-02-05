@@ -310,6 +310,14 @@ bazzy     3  300
 """
         self.assertEqual(type(y), Table)
         self.assertEqual(str(y), x)
+    
+    def test_shape(self):
+        columns = [ 'x', 'y' ]
+        t = Table([ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], [ 7, 8 ] ], columns=columns)
+        y = t.shape()
         
+        self.assertEqual(type(y), tuple)
+        self.assertEqual(y, (4, 2))
+    
 if __name__ == '__main__':
     main()
