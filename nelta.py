@@ -43,8 +43,6 @@ class LabeledList:
             return LabeledList(data, index)
         
         def find(k):
-            index = []
-            data = []
             matches = [
                 (label, self.values[i]) for i, label in enumerate(self.index) 
                     if k == label
@@ -61,7 +59,7 @@ class LabeledList:
         if not isinstance(keys, list):
             keys = [keys]
         
-        if len([v for v in keys if type(v) is bool]) == len(keys):
+        if len([ v for v in keys if type(v) is bool ]) == len(keys):
             return filter(keys) 
         
         index = []
@@ -167,9 +165,29 @@ class Table:
         # if not isinstance(keys, list):
         #     keys = [keys]
         
-        if len([v for v in keys if type(v) is bool]) == len(keys):
+        if len([ v for v in keys if type(v) is bool ]) == len(keys):
             return filter(keys)
-
+        
+        data = []
+        columns = []
+        
+        for key in keys:
+            for i, column in enumerate(self.columns):
+                if column == key:
+                    columns.append(column)
+                    
+        for value in self.values:
+            row = []
+            
+            for key in keys:
+                for i, column in enumerate(self.columns):
+                    if column == key:
+                        row.append(value[i])
+            
+            data.append(row)
+            
+        return Table(data, self.index, columns)
+    
         # index = []
         # data = []
         

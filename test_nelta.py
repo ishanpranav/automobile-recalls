@@ -238,12 +238,12 @@ bazzy     3  300 3000  3.0  30
             [ 'foo', 'bar', 'bazzy', 'qux', 'quxx' ], 
             [ 'a', 'b', 'c', 'd', 'e' ])
         y = t[LabeledList([ 'a', 'b' ])]
-        x = """a    b
-  foo 1000   10
-  bar  200    2
-bazzy    3  300
-  qux   40 4000
- quxx    7    8
+        x = """         a    b
+  foo  1000   10
+  bar   200    2
+bazzy     3  300
+  qux    40 4000
+ quxx     7    8
 """
         self.assertEqual(type(y), Table)
         self.assertEqual(str(y), x)
@@ -253,8 +253,8 @@ bazzy    3  300
         t = Table([ [ 15, 17, 19 ], [ 14, 16, 18 ] ], columns = columns)
         y = t[[ 'x', 'x', 'y' ]]
         x = """   x  x  y
-0 15 15 17
-1 14 14 16
+0  15 15 17
+1  14 14 16
 """        
         self.assertEqual(type(y), Table)
         self.assertEqual(str(y), x)
@@ -284,7 +284,8 @@ bazzy    3  300
         y = t['a']
         x = """  a a
 0  1 3
-1  4 6"""
+1  4 6
+"""
         self.assertEqual(type(y), Table)
         self.assertEqual(str(y), x)
         
