@@ -217,5 +217,76 @@ bazzy     3  300 3000  3.0  30
 """
         self.assertEqual(str(t), x)
         
+    def test_str(self):
+        t = Table([ [ 'foo', 'bar', 'baz' ], [ 'qux', 'quxx', 'corge' ] ])
+        x = """    0    1     2
+0  foo  bar   baz
+1  qux quxx corge
+"""
+        self.assertEqual(str(t), x)
+        
+    def test_getitem1(self):
+        d = [
+            [ 1000, 10, 100, 1, 1.0 ],
+            [ 200, 2, 2.0, 2000, 20 ],
+            [ 3, 300, 3000, 3.0, 30 ],
+            [ 40, 4000, 4.0, 400, 4 ],
+            [ 7, 8, 6, 3, 41 ]
+        ]
+        t = Table(
+            d, 
+            [ 'foo', 'bar', 'bazzy', 'qux', 'quxx' ], 
+            [ 'a', 'b', 'c', 'd', 'e' ])
+        y = t[LabeledList([ 'a', 'b' ])]
+        x = """a    b
+  foo 1000   10
+  bar  200    2
+bazzy    3  300
+  qux   40 4000
+ quxx    7    8
+"""
+        self.assertEqual(type(y), Table)
+        self.assertEqual(str(y), x)
+        
+    def test_getitem2(self):
+        columns = [ 'x', 'y', 'z' ]
+        t = Table([ [ 15, 17, 19 ], [ 14, 16, 18 ] ], columns = columns)
+        y = t[[ 'x', 'x', 'y' ]]
+        x = """   x  x  y
+0 15 15 17
+1 14 14 16
+"""        
+        self.assertEqual(type(y), Table)
+        self.assertEqual(str(y), x)
+        
+    def test_getitem3(self):
+        columns = [ 'x', 'y', 'z' ]
+        t = Table([[1, 2, 3], [4, 5, 6], [7, 8 , 9]], columns = columns)
+        y = t[[ True, False, True ]]
+        x = """  x y z
+0  1 2 3
+2  7 8 9
+"""
+        self.assertEqual(type(y), Table)
+        self.assertEqual(str(y), x)
+
+    def test_getitem4(self):
+        t = Table([ [ 1, 2, 3 ], [ 4, 5, 6 ] ], columns = [ 'a', 'b', 'a' ])
+        y = t['b']
+        x = """0 2
+1 5
+"""
+        self.assertEqual(type(y), LabeledList)
+        self.assertEqual(str(y), x)
+    
+    def test_getitem5(self):
+        t = Table([ [ 1, 2, 3 ], [ 4, 5, 6 ] ], columns = [ 'a', 'b', 'a' ])
+        y = t['a']
+        x = """  a a
+0  1 3
+1  4 6"""
+        self.assertEqual(type(y), Table)
+        self.assertEqual(str(y), x)
+        
 if __name__ == '__main__':
     main()
