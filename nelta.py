@@ -92,9 +92,16 @@ class LabeledList:
         return LabeledList(
             [ i is not None and i < scalar for i in self.values ], self.index)
     
+    def map(self, f):
+        return LabeledList([ f(i) for i in self.values ], self.index)
+    
 class Table:
     pass
 
 
 if __name__ == '__main__':
-    print(LabeledList([0, 1, 2, 3, 4]) > 2)
+    def squared(n):
+        return n ** 2
+    
+    print(LabeledList([5, 6, 7]).map(squared))
+    
