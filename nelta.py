@@ -4,6 +4,8 @@
 # CONSTRAINT: must use at least 4 list comprehensions
 # CONSTRAINT: may not use `pandas`, `numpy`; must use `csv`
 
+from csv import reader
+
 class LabeledList:
     def __init__(self, data = None, index = None):
         if index is None:
@@ -119,7 +121,7 @@ class Table:
             for i in range(len(self.columns))
         ]
         
-        result += " " * maxLength
+        result += " " * (maxLength + 1)
         
         for column, columnMaxLength in zip(self.columns, columnMaxLengths):
             result += f" {str(column):>{columnMaxLength}}"
@@ -215,5 +217,18 @@ class Table:
     def shape(self):
         return (len(self.index), len(self.columns))
     
-def read_csv(f):
-    pass
+def read_csv(path):
+    with open(path, newline='') as stream:
+        csvReader = reader(stream)
+        rows = [ row for row in csvReader ]
+        data = rows[1:]
+        
+        for value in data:
+            for i in range(len(value)):
+                try:
+                    f = float(value[i])
+                    value[i] = f
+                except ValueError:
+                    pass
+                
+        return Table(rows[1:], columns = rows[0])

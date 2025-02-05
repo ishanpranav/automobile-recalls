@@ -8,10 +8,10 @@ from nelta import LabeledList, Table, read_csv
 class TestNelta(TestCase):
     def test_read_csv1(self):
         t = read_csv('data/fruitarians.csv')
-        x = """first                last weekly_fruits_eaten           fav_color
-0                 abe               apple                 0.0                 red
-1                 bob              banana                 4.0              yellow
-2               carol             coconut               100.0               white
+        x = """   first    last weekly_fruits_eaten fav_color
+0    abe   apple                 0.0       red
+1    bob  banana                 4.0    yellow
+2  carol coconut               100.0     white
 """
         self.assertEqual(str(t.head(3)), x)
         
@@ -22,14 +22,14 @@ class TestNelta(TestCase):
         
     def test_read_csv3(self):
         t = read_csv('data/fruitarians.csv')
-        x = """first weekly_fruits_eaten
-2               carol               100.0
-4                 eve                20.0
-6                 ann                23.0
+        x = """   first weekly_fruits_eaten
+2  carol               100.0
+4    eve                20.0
+6    ann                23.0
 """
         y = t[t['weekly_fruits_eaten'] > 10][[ 'first', 'weekly_fruits_eaten' ]]
         
-        self.assertEqual(y, x)
+        self.assertEqual(str(y), x)
         
     def test_read_csv4(self):
         t = read_csv('data/fruitarians.csv')
@@ -190,7 +190,7 @@ y False
 class TestTable(TestCase):
     def test_init1(self):
         t = Table([[ 'foo', 'bar', 'baz' ], [ 'qux', 'quxx', 'corge' ]])
-        x = """    0    1     2
+        x = """     0    1     2
 0  foo  bar   baz
 1  qux quxx corge
 """
@@ -208,7 +208,7 @@ class TestTable(TestCase):
             d, 
             [ 'foo', 'bar', 'bazzy', 'qux', 'quxx' ], 
             [ 'a', 'b', 'c', 'd', 'e' ])
-        x = """         a    b    c    d   e
+        x = """          a    b    c    d   e
   foo  1000   10  100    1 1.0
   bar   200    2  2.0 2000  20
 bazzy     3  300 3000  3.0  30
@@ -219,7 +219,7 @@ bazzy     3  300 3000  3.0  30
         
     def test_str(self):
         t = Table([ [ 'foo', 'bar', 'baz' ], [ 'qux', 'quxx', 'corge' ] ])
-        x = """    0    1     2
+        x = """     0    1     2
 0  foo  bar   baz
 1  qux quxx corge
 """
@@ -238,7 +238,7 @@ bazzy     3  300 3000  3.0  30
             [ 'foo', 'bar', 'bazzy', 'qux', 'quxx' ], 
             [ 'a', 'b', 'c', 'd', 'e' ])
         y = t[LabeledList([ 'a', 'b' ])]
-        x = """         a    b
+        x = """          a    b
   foo  1000   10
   bar   200    2
 bazzy     3  300
@@ -252,7 +252,7 @@ bazzy     3  300
         columns = [ 'x', 'y', 'z' ]
         t = Table([ [ 15, 17, 19 ], [ 14, 16, 18 ] ], columns = columns)
         y = t[[ 'x', 'x', 'y' ]]
-        x = """   x  x  y
+        x = """    x  x  y
 0  15 15 17
 1  14 14 16
 """        
@@ -263,7 +263,7 @@ bazzy     3  300
         columns = [ 'x', 'y', 'z' ]
         t = Table([[1, 2, 3], [4, 5, 6], [7, 8 , 9]], columns = columns)
         y = t[[ True, False, True ]]
-        x = """  x y z
+        x = """   x y z
 0  1 2 3
 2  7 8 9
 """
@@ -282,7 +282,7 @@ bazzy     3  300
     def test_getitem5(self):
         t = Table([ [ 1, 2, 3 ], [ 4, 5, 6 ] ], columns = [ 'a', 'b', 'a' ])
         y = t['a']
-        x = """  a a
+        x = """   a a
 0  1 3
 1  4 6
 """
@@ -293,7 +293,7 @@ bazzy     3  300
         columns = [ 'x', 'y' ]
         t = Table([ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], [ 7, 8 ] ], columns=columns)
         y = t.head(2)
-        x = """  x y
+        x = """   x y
 0  1 2
 1  3 4
 """
@@ -304,7 +304,7 @@ bazzy     3  300
         columns = [ 'x', 'y' ]
         t = Table([ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], [ 7, 8 ] ], columns=columns)
         y = t.tail(2)
-        x = """  x y
+        x = """   x y
 2  5 6
 3  7 8
 """
