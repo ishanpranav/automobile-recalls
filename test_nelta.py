@@ -3,10 +3,10 @@
 
 from unittest import TestCase, main
 
-from nelta import LabeledList, read_csv
+from nelta import LabeledList, Table, read_csv
 
-class TestLabeledList(TestCase):
-    def test_composite1(self):
+class TestNelta(TestCase):
+    def test_read_csv1(self):
         t = read_csv('data/fruitarians.csv')
         x = """first                last weekly_fruits_eaten           fav_color
 0                 abe               apple                 0.0                 red
@@ -15,12 +15,12 @@ class TestLabeledList(TestCase):
 """
         self.assertEqual(str(t.head(3)), x)
         
-    def test_composite2(self):
+    def test_read_csv2(self):
         t = read_csv('data/fruitarians.csv')
 
         self.assertEqual(t[t['last'] == 'apple'].shape()[0], 2)
         
-    def test_composite3(self):
+    def test_read_csv3(self):
         t = read_csv('data/fruitarians.csv')
         x = """first weekly_fruits_eaten
 2               carol               100.0
@@ -31,7 +31,7 @@ class TestLabeledList(TestCase):
         
         self.assertEqual(y, x)
         
-    def test_composite4(self):
+    def test_read_csv4(self):
         t = read_csv('data/fruitarians.csv')
         
         def lengthLessThan(n):
@@ -42,7 +42,8 @@ class TestLabeledList(TestCase):
         shortFirstName = t[t['first'].map(lengthLessThan(4))]
         shortFirstName[shortFirstName['weekly_fruits_eaten'] < 10]
 
-    def test_labeledListInit1(self):
+class TestLabeledList(TestCase):
+    def test_init1(self):
         l = LabeledList([ 'foo', 'bar', 'baz' ])
         x = """0 foo
 1 bar
@@ -51,7 +52,7 @@ class TestLabeledList(TestCase):
         self.assertEqual(str(l), x)
         self.assertEqual(l.index, [ 0, 1, 2 ])
     
-    def test_labeledListInit2(self):
+    def test_init2(self):
         l = LabeledList([ 1, 2, 3, 4, 5 ], [ 'A', 'BB', 'BB', 'CCC', 'D' ])
         x = """  A 1
  BB 2
@@ -61,7 +62,7 @@ CCC 4
 """
         self.assertEqual(str(l), x)
     
-    def test_labeledListStr(self):
+    def test_str(self):
         l = LabeledList([ 1, 2, 3, 4, 5 ], [ 'A', 'BB', 'BB', 'CCC', 'D' ])
         x = """  A 1
  BB 2
@@ -71,7 +72,7 @@ CCC 4
 """
         self.assertEqual(str(l), x)
         
-    def test_labeledListGetItem1(self):
+    def test_getitem1(self):
         l = LabeledList([ 1, 2, 3, 4, 5 ], [ 'A', 'BB', 'BB', 'CCC', 'D' ])
         x = """ A 1
 BB 2
@@ -82,7 +83,7 @@ BB 3
         self.assertEqual(type(y), LabeledList)
         self.assertEqual(str(y), x)
         
-    def test_labeledListGetItem2(self):
+    def test_getitem2(self):
         l = LabeledList([ 1, 2, 3, 4, 5 ], [ 'A', 'BB', 'BB', 'CCC', 'D' ])
         x = """ A 1
 BB 2
@@ -93,7 +94,7 @@ BB 3
         self.assertEqual(type(y), LabeledList)
         self.assertEqual(str(y), x)
         
-    def test_labeledListGetItem3(self):
+    def test_getitem3(self):
         l = LabeledList([ 1, 2, 3, 4, 5 ], [ 'A', 'BB', 'BB', 'CCC', 'D' ])
         x = """CCC 4
   D 5
@@ -103,14 +104,14 @@ BB 3
         self.assertEqual(type(y), LabeledList)
         self.assertEqual(str(y), x)
     
-    def test_labeledListGetItem4(self):
+    def test_getitem4(self):
         l = LabeledList([ 1, 2, 3, 4, 5 ], [ 'A', 'BB', 'BB', 'CCC', 'D' ])
         y = l['A']
         
         self.assertEqual(type(y), int)
         self.assertEqual(y, 1)
         
-    def test_labeledListGetItem5(self):
+    def test_getitem5(self):
         l = LabeledList([ 1, 2, 3, 4, 5 ], [ 'A', 'BB', 'BB', 'CCC', 'D' ])
         x = """BB 2
 BB 3
@@ -120,7 +121,7 @@ BB 3
         self.assertEqual(type(y), LabeledList)
         self.assertEqual(str(y), x)
         
-    def test_labeledListIter(self):
+    def test_iter(self):
         l = LabeledList([ 1, 2, 3, 4, 5 ], [ 'A', 'BB', 'BB', 'CCC', 'D' ])
         y = ""
         
@@ -135,7 +136,7 @@ BB 3
 """
         self.assertEqual(y, x)
     
-    def test_labeledListGt1(self):
+    def test_gt1(self):
         y = LabeledList([ 0, 1, 2, 3, 4 ]) > 2
         x = """0 False
 1 False
@@ -146,7 +147,7 @@ BB 3
         self.assertEqual(type(y), LabeledList)
         self.assertEqual(str(y), x)
         
-    def test_labeledListGt2(self):
+    def test_gt2(self):
         y = LabeledList([None, 0, 2]) > 1
         x = """0 False
 1 False
@@ -155,7 +156,7 @@ BB 3
         self.assertEqual(type(y), LabeledList)
         self.assertEqual(str(y), x)
 
-    def test_labeledListEq1(self):
+    def test_eq1(self):
         y = LabeledList([ 1, 2 ], [ 'x', 'y' ]) == 1
         x = """x  True
 y False
@@ -163,8 +164,8 @@ y False
         self.assertEqual(type(y), LabeledList)
         self.assertEqual(str(y), x)
 
-    def test_labeledListEq2(self):
-        y = LabeledList(['a', 'b', 'c', 'b', 'b']) == 'b'
+    def test_eq2(self):
+        y = LabeledList([ 'a', 'b', 'c', 'b', 'b' ]) == 'b'
         x = """0 False
 1  True
 2 False
@@ -174,11 +175,11 @@ y False
         self.assertEqual(type(y), LabeledList)
         self.assertEqual(str(y), x)
         
-    def test_labeledListMap(self):
+    def test_map(self):
         def squared(n):
             return n ** 2
         
-        y = LabeledList([5, 6, 7]).map(squared)
+        y = LabeledList([ 5, 6, 7 ]).map(squared)
         x = """0 25
 1 36
 2 49
@@ -186,5 +187,35 @@ y False
         self.assertEqual(type(y), LabeledList)
         self.assertEqual(str(y), x)
 
+class TestTable(TestCase):
+    def test_init1(self):
+        t = Table([[ 'foo', 'bar', 'baz' ], [ 'qux', 'quxx', 'corge' ]])
+        x = """    0    1     2
+0  foo  bar   baz
+1  qux quxx corge
+"""
+        self.assertEqual(str(t), x)
+        
+    def test_init2(self):    
+        d = [
+            [ 1000, 10, 100, 1, 1.0 ],
+            [ 200, 2, 2.0, 2000, 20 ],
+            [ 3, 300, 3000, 3.0, 30 ],
+            [ 40, 4000, 4.0, 400, 4 ],
+            [ 7, 8, 6, 3, 41 ]
+        ]
+        t = Table(
+            d, 
+            [ 'foo', 'bar', 'bazzy', 'qux', 'quxx' ], 
+            [ 'a', 'b', 'c', 'd', 'e' ])
+        x = """         a    b    c    d   e
+  foo  1000   10  100    1 1.0
+  bar   200    2  2.0 2000  20
+bazzy     3  300 3000  3.0  30
+  qux    40 4000  4.0  400   4
+ quxx     7    8    6    3  41
+"""
+        self.assertEqual(str(t), x)
+        
 if __name__ == '__main__':
     main()

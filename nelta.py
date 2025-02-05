@@ -129,7 +129,7 @@ class Table:
         result += "\n"
         
         for label, value in zip(self.index, self.values):
-            result += f"{label:{formatting}}"
+            result += f"{label:{formatting}} "
             
             for cell, columnMaxLength in zip(value, columnMaxLengths):
                 result += f" {str(cell):>{columnMaxLength}}"
@@ -182,27 +182,3 @@ class Table:
 
 def read_csv(f):
     pass
-
-if __name__ == '__main__':
-    # def squared(n):
-    #     return n ** 2
-    
-    # print(LabeledList([5, 6, 7]).map(squared))
-    
-    # t = Table([['foo', 'bar', 'baz'],['qux', 'quxx', 'corge']])
-
-    # print(t)
-    # ll = LabeledList([1, 2, 3, 4, 5], ['A', 'BB', 'BB', 'CCC', 'D'])
-
-    # 1 (values are taken from LabeledList as a list...
-    # more than one label yields all label and value pairs)
-    # print(ll[LabeledList(['A', 'BB'])])
-    
-    # d = [ [1000, 10, 100, 1, 1.0], [200, 2, 2.0, 2000, 20], [3, 300, 3000, 3.0, 30], [40, 4000, 4.0, 400, 4], [7, 8, 6, 3, 41] ]
-    
-    # t = Table(d, ['foo', 'bar', 'bazzy', 'qux', 'quxx'], ['a', 'b', 'c', 'd', 'e'])
-    
-    t = Table([[1, 2, 3], [4, 5, 6], [7, 8 , 9]], columns=['x', 'y', 'z'])
-    x = t[[True, False, True]]
-
-    print(x)
