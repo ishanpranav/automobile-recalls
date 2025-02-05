@@ -162,8 +162,8 @@ class Table:
         if isinstance(keys, LabeledList):
             keys = keys.values
             
-        # if not isinstance(keys, list):
-        #     keys = [keys]
+        if not isinstance(keys, list):
+            keys = [keys]
         
         if len([ v for v in keys if type(v) is bool ]) == len(keys):
             return filter(keys)
