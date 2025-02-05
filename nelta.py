@@ -57,7 +57,7 @@ class LabeledList:
             keys = keys.values
 
         if not isinstance(keys, list):
-            keys = [keys]
+            keys = [ keys ]
         
         if len([ v for v in keys if type(v) is bool ]) == len(keys):
             return filter(keys) 
@@ -163,7 +163,7 @@ class Table:
             keys = keys.values
             
         if not isinstance(keys, list):
-            keys = [keys]
+            keys = [ keys ]
         
         if len([ v for v in keys if type(v) is bool ]) == len(keys):
             return filter(keys)
@@ -185,18 +185,11 @@ class Table:
                         row.append(value[i])
             
             data.append(row)
-            
+    
+        if len(columns) == 1:
+            return LabeledList([ value[0] for value in data ], self.index)
+                
         return Table(data, self.index, columns)
     
-        # index = []
-        # data = []
-        
-        # for key in keys:
-        #     for label, value in find(key):
-        #         index.append(label)
-        #         data.append(value)
-        
-        # return data[0] if len(data) == 1 else LabeledList(data, index)
-
 def read_csv(f):
     pass
