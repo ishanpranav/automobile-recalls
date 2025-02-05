@@ -289,5 +289,27 @@ bazzy     3  300
         self.assertEqual(type(y), Table)
         self.assertEqual(str(y), x)
         
+    def test_head(self):
+        columns = [ 'x', 'y' ]
+        t = Table([ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], [ 7, 8 ] ], columns=columns)
+        y = t.head(2)
+        x = """  x y
+0  1 2
+1  3 4
+"""
+        self.assertEqual(type(y), Table)
+        self.assertEqual(str(y), x)
+        
+    def test_tail(self):
+        columns = [ 'x', 'y' ]
+        t = Table([ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], [ 7, 8 ] ], columns=columns)
+        y = t.tail(2)
+        x = """  x y
+0  5 6
+1  7 8
+"""
+        self.assertEqual(type(y), Table)
+        self.assertEqual(str(y), x)
+        
 if __name__ == '__main__':
     main()

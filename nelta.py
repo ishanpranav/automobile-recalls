@@ -191,5 +191,18 @@ class Table:
                 
         return Table(data, self.index, columns)
     
+    def head(self, n):
+        index = []
+        data = []
+        
+        for i in range(n):
+            index.append(self.index[i])
+            data.append(self.values[i])
+        
+        return Table(data, index, self.columns)
+    
+    def tail(self, n):
+        pass
+        
 def read_csv(f):
     pass
