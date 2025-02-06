@@ -9,6 +9,16 @@ and Analysis course.
 This is a simple Jupyter Notebook that illustrates comprehensions and
 manipulation of tabular data relating to automobile recalls.
 
+## `nelta`
+
+This is a data table data structures library that includes `LabeledList` and
+`Table` implementations with support for `numpy`-style indexing.
+
+## Recalls potentially affecting at least 500,000 vehicles
+
+This section of the Jupyter notebook leverages `nelta` and composes its features
+to flexibly and easily manipulate tabular data.
+
 ## License
 
 This repository is licensed with the [MIT](LICENSE.txt) license.
