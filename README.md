@@ -19,6 +19,22 @@ This is a data table data structures library that includes `LabeledList` and
 This section of the Jupyter notebook leverages `nelta` and composes its features
 to flexibly and easily manipulate tabular data.
 
+## Constraints
+
+The following constraints are imposed on the implementation:
+
+* must use at least four list comprehensions:
+  * [nelta.py:64](https://github.com/nyu-csci-ua-0479-001-spring-2025/homework02-ishanpranav/blob/ab5bfb6272ca8642c8d08640d7d97b458b5106e0/nelta.py#L64)
+  * [nelta.py:82](https://github.com/nyu-csci-ua-0479-001-spring-2025/homework02-ishanpranav/blob/ab5bfb6272ca8642c8d08640d7d97b458b5106e0/nelta.py#L82)
+  * [nelta.py:86](https://github.com/nyu-csci-ua-0479-001-spring-2025/homework02-ishanpranav/blob/ab5bfb6272ca8642c8d08640d7d97b458b5106e0/nelta.py#L86)
+  * [nelta.py:90](https://github.com/nyu-csci-ua-0479-001-spring-2025/homework02-ishanpranav/blob/ab5bfb6272ca8642c8d08640d7d97b458b5106e0/nelta.py#L90)
+  * [nelta.py:94](https://github.com/nyu-csci-ua-0479-001-spring-2025/homework02-ishanpranav/blob/ab5bfb6272ca8642c8d08640d7d97b458b5106e0/nelta.py#L94)
+  * [nelta.py:97](https://github.com/nyu-csci-ua-0479-001-spring-2025/homework02-ishanpranav/blob/ab5bfb6272ca8642c8d08640d7d97b458b5106e0/nelta.py#L97)
+  * [nelta.py:119](https://github.com/nyu-csci-ua-0479-001-spring-2025/homework02-ishanpranav/blob/ab5bfb6272ca8642c8d08640d7d97b458b5106e0/nelta.py#L119)
+  * [nelta.py:170](https://github.com/nyu-csci-ua-0479-001-spring-2025/homework02-ishanpranav/blob/ab5bfb6272ca8642c8d08640d7d97b458b5106e0/nelta.py#L170)
+  * [nelta.py:192](https://github.com/nyu-csci-ua-0479-001-spring-2025/homework02-ishanpranav/blob/ab5bfb6272ca8642c8d08640d7d97b458b5106e0/nelta.py#L192)
+* must use at least two lambda expressions: see [recall.ipynb](recall.ipynb)
+
 ## License
 
 This repository is licensed with the [MIT](LICENSE.txt) license.

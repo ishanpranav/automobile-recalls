@@ -219,8 +219,7 @@ class Table:
     
 def read_csv(path):
     with open(path, newline='') as stream:
-        csvReader = reader(stream)
-        rows = [ row for row in csvReader ]
+        rows = list(reader(stream))
         data = rows[1:]
         
         for value in data:
